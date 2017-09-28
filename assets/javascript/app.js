@@ -101,7 +101,7 @@ var resetTrivia = function() {
 	selectedItem = "";
 	correctAnswer = "";
 	message = "";
-	limitedTime = 5;
+	limitedTime = 30;
 
 	$("#message").remove();
 	
