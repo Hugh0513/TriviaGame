@@ -90,8 +90,10 @@ var limitedTime;
 
 var selectedItem;
 var correctAnswer;
-var message; // Correct! or Nop! or Out of Time!
+var message; // Correct! or Nop! or Out of Time! & correct amswer & image
 
+
+// Reset variables for each trivia
 var resetTrivia = function() {
 
 	intervalID = 0;
@@ -105,51 +107,57 @@ var resetTrivia = function() {
 	
 };
 
+// Reset variables for Game
 var resetGame = function() {
 
+	triviaNum = 0;
 	correctAnsNum = 0;
 	incorrectAnsNum = 0;
 	unansweredNum = 0;
 
 }
 
+// Create Start button
 var setStartButton = function() {
 
-	var charDiv = document.createElement("div");
-	$(".main").append(charDiv);
+	var newDiv = document.createElement("div");
+	$(".main").append(newDiv);
 
-	$(charDiv).attr("id", "startButton");
+	$(newDiv).attr("id", "startButton");
 	$("#startButton").html("Start");
 
 };
 
-
+// Create Div for Timer
 var setTimerDiv = function() {
 
-	var charDiv = document.createElement("div");
-	$(".main").append(charDiv);
+	var newDiv = document.createElement("div");
+	$(".main").append(newDiv);
 
-	$(charDiv).attr("id", "remainSeconds");
+	$(newDiv).attr("id", "remainSeconds");
 
 };
 
+// Remove Div for Timer
 var removeTimerDiv = function() {
 
 	$("#remainSeconds").remove();
 }
 
+// Create Divs for Question and Answer
 var setQandADiv = function() {
 
-	var charDiv = document.createElement("div");
-	$(".main").append(charDiv);
-	$(charDiv).attr("id", "question");
+	var newDiv = document.createElement("div");
+	$(".main").append(newDiv);
+	$(newDiv).attr("id", "question");
 
-	var charDiv = document.createElement("div");
-	$(".main").append(charDiv);
-	$(charDiv).attr("id", "ansDiv");
+	var newDiv = document.createElement("div");
+	$(".main").append(newDiv);
+	$(newDiv).attr("id", "ansDiv");
 
 };
 
+// Remove Divs for Question and Answer
 var removeQandADiv = function() {
 
 	$("#question").remove();
@@ -157,22 +165,23 @@ var removeQandADiv = function() {
 
 }
 
+// Create Div for messagte
 var setMessage = function() {
 
 	// set Message Div
-	var charDiv = document.createElement("div");
-	$(".main").append(charDiv);
+	var newDiv = document.createElement("div");
+	$(".main").append(newDiv);
 
-	$(charDiv).attr("id", "message");
+	$(newDiv).attr("id", "message");
 
 };
 
+// Remove Div for message
 var removeMessage = function() {
-
 	$("#message").remove();
-
 };
 
+// Run timer
 var run = function() {
  	intervalId = setInterval(decrement, 1000);
 }
@@ -182,8 +191,10 @@ var decrement = function() {
 
 	limitedTime--;
 
+	// Dispaly Time remaining.
 	$("#remainSeconds").html("Time remaining: " + limitedTime + " Seconds");
 
+	// When timed out, display message and move to next trivia.
 	if (limitedTime === 0) {
 
 		stop();
@@ -213,10 +224,12 @@ var stop = function() {
  	clearInterval(intervalId);
 }
 
+// In 3 seconds, move to next trivia.
 var nextTrivia = function() {
 	intervalId = setInterval(moveToNext, 1000 * 3); // <-  Seconds unitl moving next
 }
 
+// Move to next trivia
 var moveToNext = function() {
 	console.log("next");
 
@@ -227,7 +240,9 @@ var moveToNext = function() {
 	removeTimerDiv();
 	removeMessage();
 
+	// Count up trivia array number
 	triviaNum++;
+	console.log(triviaNum);
 
 	if (triviaNum !== triviaObjects.length) {
 	// Trivia is remaining
@@ -239,16 +254,18 @@ var moveToNext = function() {
 	}
 }
 
+// Create Restart button
 var setRestartButton = function() {
 
-	var charDiv = document.createElement("div");
-	$(".main").append(charDiv);
+	var newDiv = document.createElement("div");
+	$(".main").append(newDiv);
 
-	$(charDiv).attr("id", "restartButton");
+	$(newDiv).attr("id", "restartButton");
 	$("#restartButton").html("Start Over?");
 
 };
 
+// Game End
 var gameEnd = function() {
 	console.log(correctAnsNum);
 	console.log(incorrectAnsNum);
@@ -258,12 +275,12 @@ var gameEnd = function() {
 	setMessage();
 
 	// Print numbers
-	var charDiv = document.createElement("div");
-	$("#message").append(charDiv);
-	$(charDiv).html("<h1>All Done, heres how you did!</h1>");
-	$(charDiv).append("<p>Correct Answers: " + correctAnsNum + "</p>");
-	$(charDiv).append("<p>Incorrect Answers: " + incorrectAnsNum + "</p>");
-	$(charDiv).append("<p>Unanswered: " + unansweredNum + "</p>");
+	var newDiv = document.createElement("div");
+	$("#message").append(newDiv);
+	$(newDiv).html("<h1>All Done, heres how you did!</h1>");
+	$(newDiv).append("<p>Correct Answers: " + correctAnsNum + "</p>");
+	$(newDiv).append("<p>Incorrect Answers: " + incorrectAnsNum + "</p>");
+	$(newDiv).append("<p>Unanswered: " + unansweredNum + "</p>");
 
 	// Display Restart button
 	setRestartButton();
@@ -276,19 +293,20 @@ var gameEnd = function() {
 
 		console.log("restart button pushed");
 
-		printTrivia(0);
-
 		// Reset variables
 		resetGame();
+
+		// Display 1st trivia
+		printTrivia(0);
 
 	});
 
 }
 
+// Print Question and answer options
+var printTrivia = function() {
 
-var printTrivia = function(triviaNum) {
-
-	// Reset
+	// Reset variables
 	resetTrivia();
 
 	// Print timer
@@ -299,39 +317,40 @@ var printTrivia = function(triviaNum) {
 	// Set Div for Question and Options 
 	setQandADiv();
 
+	console.log(triviaNum);
 	// Print Question
 	$("#question").html(triviaObjects[triviaNum].question);
 
 	// Print Options
-	var charDiv = document.createElement("li");
-	$("#ansDiv").append(charDiv);
-	$(charDiv).attr("class", "option");
-	$(charDiv).attr("id", "c1");
-	$(charDiv).attr("value", triviaObjects[triviaNum].c1);
-	$(charDiv).html(triviaObjects[triviaNum].c1);
+	var newDiv = document.createElement("li");
+	$("#ansDiv").append(newDiv);
+	$(newDiv).attr("class", "option");
+	$(newDiv).attr("id", "c1");
+	$(newDiv).attr("value", triviaObjects[triviaNum].c1);
+	$(newDiv).html(triviaObjects[triviaNum].c1);
 
-	var charDiv = document.createElement("li");
-	$("#ansDiv").append(charDiv);
-	$(charDiv).attr("class", "option");
-	$(charDiv).attr("id", "c2");
-	$(charDiv).attr("value", triviaObjects[triviaNum].c2);
-	$(charDiv).html(triviaObjects[triviaNum].c2);
+	var newDiv = document.createElement("li");
+	$("#ansDiv").append(newDiv);
+	$(newDiv).attr("class", "option");
+	$(newDiv).attr("id", "c2");
+	$(newDiv).attr("value", triviaObjects[triviaNum].c2);
+	$(newDiv).html(triviaObjects[triviaNum].c2);
 
-	var charDiv = document.createElement("li");
-	$("#ansDiv").append(charDiv);
-	$(charDiv).attr("class", "option");
-	$(charDiv).attr("id", "c3");
-	$(charDiv).attr("value", triviaObjects[triviaNum].c3);
-	$(charDiv).html(triviaObjects[triviaNum].c3);
+	var newDiv = document.createElement("li");
+	$("#ansDiv").append(newDiv);
+	$(newDiv).attr("class", "option");
+	$(newDiv).attr("id", "c3");
+	$(newDiv).attr("value", triviaObjects[triviaNum].c3);
+	$(newDiv).html(triviaObjects[triviaNum].c3);
 
-	var charDiv = document.createElement("li");
-	$("#ansDiv").append(charDiv);
-	$(charDiv).attr("class", "option");
-	$(charDiv).attr("id", "c4");
-	$(charDiv).attr("value", triviaObjects[triviaNum].c4);
-	$(charDiv).html(triviaObjects[triviaNum].c4);
+	var newDiv = document.createElement("li");
+	$("#ansDiv").append(newDiv);
+	$(newDiv).attr("class", "option");
+	$(newDiv).attr("id", "c4");
+	$(newDiv).attr("value", triviaObjects[triviaNum].c4);
+	$(newDiv).html(triviaObjects[triviaNum].c4);
 
-	// When a option was selected...
+	// When a option was selected, display correct answer.
 	$("#ansDiv").on("click", '.option', function(event) {
 	//$("#ansUL").click(function(event) {
 		console.log("selected");
@@ -344,7 +363,7 @@ var printTrivia = function(triviaNum) {
 		var selectedItem = $(this).attr("value");
 		var correctAnswer = triviaObjects[triviaNum].ans
 
-		// Remove question and options
+		// Remove Divs for question and options
 		$("#question").remove();
 		$("#ansDiv").remove();
 
@@ -366,12 +385,10 @@ var printTrivia = function(triviaNum) {
 			incorrectAnsNum++;
 		}
 
-		// Dispaly message
+		// Dispaly message and photo
 		setMessage();
 		$("#message").html(message);
-
 		$("#message").append("<img src='" + triviaObjects[triviaNum].ansImg + "'>");
-
 
 		// Move to Next question
 		nextTrivia()
@@ -379,7 +396,6 @@ var printTrivia = function(triviaNum) {
 	});
 
 }
-
 
 $(document).ready(function() {
 
