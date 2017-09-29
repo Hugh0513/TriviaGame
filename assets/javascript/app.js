@@ -322,28 +322,28 @@ var printTrivia = function() {
 	$("#question").html(triviaObjects[triviaNum].question);
 
 	// Print Options
-	var newDiv = document.createElement("li");
+	var newDiv = document.createElement("div");
 	$("#ansDiv").append(newDiv);
 	$(newDiv).attr("class", "option");
 	$(newDiv).attr("id", "c1");
 	$(newDiv).attr("value", triviaObjects[triviaNum].c1);
 	$(newDiv).html(triviaObjects[triviaNum].c1);
 
-	var newDiv = document.createElement("li");
+	var newDiv = document.createElement("div");
 	$("#ansDiv").append(newDiv);
 	$(newDiv).attr("class", "option");
 	$(newDiv).attr("id", "c2");
 	$(newDiv).attr("value", triviaObjects[triviaNum].c2);
 	$(newDiv).html(triviaObjects[triviaNum].c2);
 
-	var newDiv = document.createElement("li");
+	var newDiv = document.createElement("div");
 	$("#ansDiv").append(newDiv);
 	$(newDiv).attr("class", "option");
 	$(newDiv).attr("id", "c3");
 	$(newDiv).attr("value", triviaObjects[triviaNum].c3);
 	$(newDiv).html(triviaObjects[triviaNum].c3);
 
-	var newDiv = document.createElement("li");
+	var newDiv = document.createElement("div");
 	$("#ansDiv").append(newDiv);
 	$(newDiv).attr("class", "option");
 	$(newDiv).attr("id", "c4");
